@@ -1,0 +1,1 @@
+here a simple txt file with some text. We also add some special char : "é'(-è)@ç^|.

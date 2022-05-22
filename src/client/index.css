@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&family=Roboto+Slab&display=swap');
+
+*{
+    --primary-color: #1A1A1A;
+    --secondary-color: #333333;
+    --text-color: rgb(235, 235, 235);
+    font-family: 'Quicksand', sans-serif;
+}
+
+body{
+    margin: 0;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    text-align: justify;
+}
+
+h1{
+    text-align: center;
+    margin: 0;
+}
+
+h2{
+    text-align: center;
+    margin: 0;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: var(--secondary-color);
+}
+
+nav > div > button{
+    margin: 5px;
+}
+
+nav > img{
+    width: 70px;
+}
+
+button{
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    filter: brightness(1.5);
+}
+
+[data-page=home]{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.box{
+    width: 150px;
+    height: 200px;
+    margin: 10px;
+    background-color: var(--secondary-color);
+}
+
+.box:hover{
+    transform: scale(1.1);
+}
+
+[data-page=film]{
+    position: fixed;
+    padding: 20px;
+    max-height: 90vh;
+    width: 60vw;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    transition: 0.1s;
+    display: flex;
+    overflow-y: scroll;
+    height: fit-content;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 5px var(--primary-color);
+}
+
+[data-page=film] img{
+    min-width: 150px;
+    height: 200px;
+    margin-right: 20px;
+}
+
+[data-page=film] #title{
+    margin-bottom: 10px;
+}
+
+[data-page=film] button{
+    background-color: var(--secondary-color);
+    margin: 10px 10px 0 0;
+}
+
+[data-page=film] textarea{
+    width: 90%;
+    height: 200px;
+    resize: none;
+    border: none;
+    margin: auto;
+    display: block;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+[data-page=film] #comments{
+    padding-bottom: 10px;
+}
+
+[data-page=film] .comment{
+    background-color: var(--secondary-color);
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+[data-page=film] #sendComment{
+
+}
+
+#pagination{
+    width: 100%;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+#pagination div{
+    margin: 5px;
+    background-color: var(--secondary-color);
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    text-align: center;
+}
+
+#pagination div:hover{
+    transform: scale(1.5);
+}
+
+#pagination div:hover{
+    cursor: pointer;
+}
