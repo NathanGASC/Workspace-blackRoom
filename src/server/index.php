@@ -67,7 +67,7 @@ function mime_content_type($filename)
         finfo_close($finfo);
         return $mimetype;
     } else {
-        return 'application/octet-stream';
+        return 'video/mp4';
     }
 }
 
@@ -87,7 +87,7 @@ if ($link[3] == "api") {
     }
     $filename = "./../client/" . join("/", $link);
 
-    header('Content-type: ' . mime_content_type($filename));
+    header('Content-Type: ' . mime_content_type($filename));
     if ((@include $filename) === false) {
         http_response_code(404);
     }

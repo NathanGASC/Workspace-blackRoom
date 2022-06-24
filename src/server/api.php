@@ -79,7 +79,7 @@ class DB extends SQLite3
         $sql = null;
         switch ($entity) {
             case 'user':
-                $sql = "INSERT INTO user(id,email,emailVerify,login,password,picture,birthday,csrfToken,bearerToken,bearerExpiration) values (null,'$objData->email',false,'$objData->login','$objData->password','','$objData->birthday','" . uniqid() . "','" . uniqid() . "','23/12/2033')";
+                $sql = "INSERT INTO user(id,email,emailVerify,login,password,picture,birthday,csrfToken,bearerToken,bearerExpiration) values (null,'$objData->email',false,'$objData->login','$objData->password','','23/12/2033','" . uniqid() . "','" . uniqid() . "','23/12/2033')";
                 break;
             case 'film':
                 $sql = "INSERT INTO film(id,titre,description,authorId) values (null, '$objData->titre', '$objData->description', '$objData->authorId')";
@@ -88,10 +88,10 @@ class DB extends SQLite3
                 $sql = "INSERT INTO author(id,email,emailVerify,login,password,picture,birthday,csrfToken,bearerToken,bearerExpiration) values (null,'$objData->email',false,'$objData->login','$objData->password','','$objData->birthday','" . uniqid() . "','" . uniqid() . "','23/12/2033')";
                 break;
             case 'comment':
-                $sql = "INSERT INTO comment(id,email,emailVerify,login,password,picture,birthday,csrfToken,bearerToken,bearerExpiration) values (null,'$objData->email',false,'$objData->login','$objData->password','','$objData->birthday','" . uniqid() . "','" . uniqid() . "','23/12/2033')";
+                $sql = "INSERT INTO comment(id, text, filmId, userId) values (null, '$objData->text', $objData->filmId, $objData->userId)";
                 break;
             case 'fav':
-                $sql = "INSERT INTO fav(id,email,emailVerify,login,password,picture,birthday,csrfToken,bearerToken,bearerExpiration) values (null,'$objData->email',false,'$objData->login','$objData->password','','$objData->birthday','" . uniqid() . "','" . uniqid() . "','23/12/2033')";
+                $sql = "INSERT INTO fav(id, filmId, userId) values (null,'$objData->filmId','$objData->userId')";
                 break;
             case 'cinema':
                 $sql = "INSERT INTO cinema(id,email,emailVerify,login,password,picture,birthday,csrfToken,bearerToken,bearerExpiration) values (null,'$objData->email',false,'$objData->login','$objData->password','','$objData->birthday','" . uniqid() . "','" . uniqid() . "','23/12/2033')";
@@ -100,7 +100,7 @@ class DB extends SQLite3
                 $sql = "INSERT INTO seance(id,email,emailVerify,login,password,picture,birthday,csrfToken,bearerToken,bearerExpiration) values (null,'$objData->email',false,'$objData->login','$objData->password','','$objData->birthday','" . uniqid() . "','" . uniqid() . "','23/12/2033')";
                 break;
             case 'reservation':
-                $sql = "INSERT INTO reservation(id,email,emailVerify,login,password,picture,birthday,csrfToken,bearerToken,bearerExpiration) values (null,'$objData->email',false,'$objData->login','$objData->password','','$objData->birthday','" . uniqid() . "','" . uniqid() . "','23/12/2033')";
+                $sql = "INSERT INTO reservation(id, seanceId, userId) values (null,'$objData->seanceId','$objData->userId')";
                 break;
             default:
                 # code...
@@ -108,6 +108,14 @@ class DB extends SQLite3
         }
         $result = $this->exec($sql);
         if (!$result) $this->sendJSONFail("Request failed");
+        $this->sendJSON(STATUS::SUCCESS,$result);
+    }
+
+    function DELETE($entity, $id){
+        $sql = "DELETE FROM $entity WHERE id='$id'";
+        $result = $this->exec($sql);
+        if (!$result) $this->sendJSONFail("Request failed");
+        $this->sendJSON(STATUS::SUCCESS,$result);
     }
 
     function sendJSON($status, $data)
@@ -206,6 +214,29 @@ $link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "htt
 $link = explode("?", $link);
 $link = explode("/", $link[0]);
 if ($link[3] == "api") {
+    if($link[4] == "login" && $_SERVER["REQUEST_METHOD"] == "POST"){
+        $returned = array();
+        $i = 0;
+
+        $data = json_decode(file_get_contents('php://input'));
+        $result = $db->query("SELECT * FROM user WHERE login='".$data->login."' AND password='".$data->password."'");
+        if (!$result) {
+            $db->sendJSON(STATUS::FAIL->value, $returned);
+            return;
+        };
+        while ($res = $result->fetchArray(SQLITE3_ASSOC)) {
+            foreach ($res as $key => $value) {
+                $returned[$i][$key] = $value;
+            }
+            $i++;
+        }
+        if(count($returned)==0){
+            $db->sendJSON(STATUS::FAIL->value, $returned);
+            return;
+        }
+        $db->sendJSON(STATUS::SUCCESS->value, $returned);
+        return;
+    }
     if (!array_key_exists(4, $link)) {
         http_response_code(404);
         return;
@@ -223,6 +254,7 @@ if ($link[3] == "api") {
                 case 'UPDATE':
                     break;
                 case 'DELETE':
+                    $db->DELETE($link[4], isset($_GET["id"]) ? $_GET["id"] : -1);
                     break;
                 default:
                     http_response_code(404);
@@ -230,6 +262,4 @@ if ($link[3] == "api") {
             }
         }
     }
-} else {
-    http_response_code(404);
 }

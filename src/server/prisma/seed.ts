@@ -35,7 +35,27 @@ const generatorV1 = new GeneratorV1();
 
         const film = await generatorV1.generateFilm(authorG.id);
         const filmG = await prisma.film.create({
-            data: film as any,
+            data: film,
+        })
+
+        const comment = await generatorV1.generateComment(userG.id, filmG.id);
+        const commentG = await prisma.comment.create({
+            data: comment,
+        })
+
+        const cinema = await generatorV1.generateCinema()
+        const cinemaG = await prisma.cinema.create({
+            data: cinema
+        })
+
+        const sceance = await generatorV1.generateSeance(filmG.id, cinemaG.id)
+        const sceanceG = await prisma.seance.create({
+            data: sceance
+        })
+
+        const reservation = await generatorV1.generateReservation(sceanceG.id, userG.id)
+        const reservationG = await prisma.reservation.create({
+            data: reservation
         })
     }
 })()

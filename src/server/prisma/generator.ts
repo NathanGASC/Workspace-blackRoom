@@ -37,11 +37,70 @@ export class GeneratorV1 {
         }
     }
 
+    async generateComment(userId: number, filmId: number) {
+        return {
+            "text": faker.lorem.paragraph(),
+            "Film": {
+                "connect": {
+                    "id": filmId
+                }
+            },
+            "User": {
+                "connect": {
+                    "id": userId
+                }
+            }
+        }
+    }
+
+    async generateSeance(filmId: number, cinemaId: number){
+        return {
+            "date": faker.date.future(),
+            "Cinema": {
+                "connect": {
+                    "id": cinemaId
+                }
+            },
+            "Film": {
+                "connect": {
+                    "id": filmId
+                }
+            }
+        }
+    }
+
+    async generateCinema(){
+        return {
+            "name": faker.name.title(),
+            "coordX": this.getRandomInRange(-180, 180, 3),
+            "coordY": this.getRandomInRange(-180, 180, 3),
+        }
+    }
+
+    async generateReservation(seanceId:number, userId: number){
+        return {
+            "Seance": {
+                "connect": {
+                    "id": seanceId
+                }
+            },
+            "User": {
+                "connect": {
+                    "id": userId
+                }
+            }
+        }
+    }
 
     private async getFilmPicture() {
         const res = await fetch("https://api.lorem.space/image/movie?w=150&h=200");
         const buffer = await res.buffer();
         const img = buffer.toString("base64");
         return img;
+    }
+
+    private getRandomInRange(from: any, to: any, fixed: any) {
+        return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+        // .toFixed() returns string, so ' * 1' is a trick to convert to number
     }
 }

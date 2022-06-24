@@ -5,5 +5,9 @@ execSync("cd ..");
 if(process.env.COPY_SERVER != "TRUE"){
     execSync("tsc -p ./src/client/ && tsc -p ./src/server/");
 }else{
-    execSync("tsc -p ./src/client/");
+    try{
+        const buffer = execSync("tsc -p ./src/client/");
+    }catch(e){
+        console.log(e.stdout.toString("utf-8"));
+    }
 }

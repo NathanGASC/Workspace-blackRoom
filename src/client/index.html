@@ -11,14 +11,29 @@
     <nav>
         <img src="/assets/logo.png">
         <div>
-            <button>
+            <button id="btnCreate">Créer</button>
+            <button id="btnConnect" style="display: none;">
                 Connexion
             </button>
-            <button>
+            <button id="btnInscription" style="display: none;">
                 Inscription
+            </button>
+            <button id="btnMyPage" style="display: none;">
+                Ma page
+            </button>
+            <button id="btnDeconnexion" style="display: none;">
+                Déconnexion
             </button>
         </div>
     </nav>
+    <div id="filter">
+        <div>Filtre : </div>
+        <div>
+            <button id="byDefault">Défaut</button>
+            <button id="byFav">Par favoris</button>
+            <button id="byTitle">Par titre</button>
+        </div>
+    </div>
     <div data-page="home">
         <img class="box" onError="this.src='/assets/logo.png'">
         <img class="box" onError="this.src='/assets/logo.png'">
@@ -135,10 +150,15 @@
     </div>
 
     <div data-page="film" style="display: none;">
+        <video controls>
+            <source src="https://static.videezy.com/system/resources/previews/000/000/248/original/http-bing.mp4" type="video/mp4">
+            Sorry, your browser doesn't support embedded videos.
+        </video>
         <div>
             <img>
-            <button>Regarder</button>
-            <button>Ajouter aux favoris</button>
+            <button id="btnWatch">Regarder</button>
+            <button id="btnAddFav">Ajouter aux favoris</button>
+            <div id="seances"></div>
         </div>
         <div>
             <h2 id="title">Utopia</h2>
@@ -155,27 +175,32 @@
                     <div>username: </div>
                     Et quoniam apud eos ut in capite mundi morborum acerbitates celsius dominantur, ad quos vel sedandos omnis professio medendi torpescit, excogitatum est adminiculum sospitale nequi amicum perferentem similia videat, additumque est cautionibus paucis remedium aliud satis validum, ut famulos percontatum missos quem ad modum valeant noti hac aegritudine colligati, non ante recipiant domum quam lavacro purgaverint corpus. ita etiam alienis oculis visa metuitur labes.
                 </div>
-                <div class="comment">
-                    <div>username: </div>
-                    Et quoniam apud eos ut in capite mundi morborum acerbitates celsius dominantur, ad quos vel sedandos omnis professio medendi torpescit, excogitatum est adminiculum sospitale nequi amicum perferentem similia videat, additumque est cautionibus paucis remedium aliud satis validum, ut famulos percontatum missos quem ad modum valeant noti hac aegritudine colligati, non ante recipiant domum quam lavacro purgaverint corpus. ita etiam alienis oculis visa metuitur labes.
-                </div>
-                <div class="comment">
-                    <div>username: </div>
-                    Et quoniam apud eos ut in capite mundi morborum acerbitates celsius dominantur, ad quos vel sedandos omnis professio medendi torpescit, excogitatum est adminiculum sospitale nequi amicum perferentem similia videat, additumque est cautionibus paucis remedium aliud satis validum, ut famulos percontatum missos quem ad modum valeant noti hac aegritudine colligati, non ante recipiant domum quam lavacro purgaverint corpus. ita etiam alienis oculis visa metuitur labes.
-                </div>
-                <div class="comment">
-                    <div>username: </div>
-                    Et quoniam apud eos ut in capite mundi morborum acerbitates celsius dominantur, ad quos vel sedandos omnis professio medendi torpescit, excogitatum est adminiculum sospitale nequi amicum perferentem similia videat, additumque est cautionibus paucis remedium aliud satis validum, ut famulos percontatum missos quem ad modum valeant noti hac aegritudine colligati, non ante recipiant domum quam lavacro purgaverint corpus. ita etiam alienis oculis visa metuitur labes.
-                </div>
-                <div class="comment">
-                    <div>username: </div>
-                    Et quoniam apud eos ut in capite mundi morborum acerbitates celsius dominantur, ad quos vel sedandos omnis professio medendi torpescit, excogitatum est adminiculum sospitale nequi amicum perferentem similia videat, additumque est cautionibus paucis remedium aliud satis validum, ut famulos percontatum missos quem ad modum valeant noti hac aegritudine colligati, non ante recipiant domum quam lavacro purgaverint corpus. ita etiam alienis oculis visa metuitur labes.
-                </div>
-                <div class="comment">
-                    <div>username: </div>
-                    Et quoniam apud eos ut in capite mundi morborum acerbitates celsius dominantur, ad quos vel sedandos omnis professio medendi torpescit, excogitatum est adminiculum sospitale nequi amicum perferentem similia videat, additumque est cautionibus paucis remedium aliud satis validum, ut famulos percontatum missos quem ad modum valeant noti hac aegritudine colligati, non ante recipiant domum quam lavacro purgaverint corpus. ita etiam alienis oculis visa metuitur labes.
-                </div>
             </div>
+        </div>
+    </div>
+
+    <div data-page="login" style="display: display;">
+        <div>
+            <form>
+                <h2><img src="/assets/logo.png"> Connexion</h2>
+                <div class="line"><label>Identifiant</label><input id=inputLogin type="text"></div>
+                <div class="line"><label>Mot de passe</label><input id="inputPassword" type="password"></div>
+                <a id="btnCreateAccount">Je n'ai pas de comptes. Créer un compte.</a>
+                <input id="btnConnect" type="button" value="Connexion">
+            </form>
+        </div>
+    </div>
+
+    <div data-page="register" style="display: none;">
+        <div>
+            <form>
+                <h2><img src="/assets/logo.png"> Inscription</h2>
+                <div class="line"><label>Identifiant</label><input type="text" id="identifiant"></div>
+                <div class="line"><label>Mot de passe</label><input type="password" id="password"></div>
+                <div class="line"><label>Email</label><input type="email" id="email"></div>
+                <a id="btnGoToLogin">J'ai déjà un compte.</a>
+                <input id="btnInscription" type="button" value="Inscription">
+            </form>
         </div>
     </div>
 </body>
